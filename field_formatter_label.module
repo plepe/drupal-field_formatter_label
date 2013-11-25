@@ -70,7 +70,12 @@ function field_formatter_label_theme_registry_alter(&$theme_registry) {
 */
 function field_formatter_label_preprocess_field(&$variables) {
   $field = field_info_instance($variables['element']['#entity_type'], $variables['element']['#field_name'], $variables['element']['#bundle']);
-  if (isset($field['display_label']) && strlen(trim($field['display_label'])) > 0) {
-    $variables['label'] = $field['display_label'];
+
+  if (isset($field['display']) &&
+      isset($field['display']['default']) &&
+      isset($field['display']['default']['settings']) &&
+      isset($field['display']['default']['settings']['field_formatter_label']) &&
+      strlen(trim($field['display']['default']['settings']['field_formatter_label'])) > 0) {
+    $variables['label'] = $field['display']['default']['settings']['field_formatter_label'];
   }
 }
